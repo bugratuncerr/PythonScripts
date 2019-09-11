@@ -1,12 +1,14 @@
 import sys,time,os, shutil, errno
 from distutils.dir_util import copy_tree
 
-print("\nRequired arguments order for the start:")
-print("""	argv[1] -> Path of the **LOGS**
+"""
+Required arguments order for the start:
+	argv[1] -> Path of the **LOGS**
 	argv[2] -> Path of the **SOURCE FOLDER**
 	argv[3] -> Path of the **IMAGE FOLDER**
 	argv[4] -> Path of the **DESTINATION FOLDER FOR THE SOURCE FOLDER**
-	argv[5] -> Path of the **DESTINATION FOLDER FOR THE IMAGE FOLDER**\n""")
+	argv[5] -> Path of the **DESTINATION FOLDER FOR THE IMAGE FOLDER**
+"""
 
 
 source_paths = [sys.argv[2],sys.argv[3]]
