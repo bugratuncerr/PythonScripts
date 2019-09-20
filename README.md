@@ -7,7 +7,8 @@
 ```
 Arguments Order:                  
 1. argv[1] --> Path of the folder that will be listened                 
-2. argv[2] --> Path of the destination folder for the copy invalid files               
+2. argv[2] --> Path of the destination folder for the copy invalid files
+3. argv[3] --> Path and filename of the log file
 ```
 
  2-) **listener.py** --> Basic script that controls the specific folder (i.e. Log folder) while running. 
