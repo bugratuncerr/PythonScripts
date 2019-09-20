@@ -3,15 +3,14 @@ import time
 import json
 import sys
 import shutil
-# for the python versions >3
-from six import iteritems
+from six import iteritems  # for the python versions >3
 from datetime import datetime
 
 """ 
-    Required arguments order for the start: 
-    argv[1] -> Path of the folder which will be listened 
-    argv[2] -> Path of the destination folder which invalid json files will be copied 
-    argv[3] -> Path and name of the txt file(ex. C:\main.txt)
+Required arguments order for the start: 
+argv[1] -> Path of the folder which will be listened 
+argv[2] -> Path of the destination folder which invalid json files will be copied 
+argv[3] -> Path and name of the txt file(ex. /home/main.txt)
 """
 
 """
@@ -42,6 +41,7 @@ def findKey(key, document):
             for result in findKey(key, d):
                 final.append(result)
     if isinstance(document, dict):
+        # for python2 replace iteritems(document) with document.iteritems()
         for k, v in iteritems(document):
             if key == k:
                 final.append(v)
@@ -89,12 +89,19 @@ while 1:
         if(i not in invalid_json_files):
             with open(path_to_watch+"/"+i, "r") as json_x:
                 obj = json.load(json_x)
-                if(findKey("text", obj)[0] != "" and findKey("text", obj)[0] not in controlList):
-                    # time is dedicated with the iso format
-                    text = now.isoformat() + " Plate:"+findKey("text", obj)[0]
-                    controlList.append(findKey("text", obj)[0])
-                    with open(sys.argv[3], 'a') as f:
-                        f.write(text+"\n")
+                for i in findKey("text", obj):
+                    if(i not in controlList):
+                        if(i == ""):
+                            # time is dedicated with the iso format
+                            text = now.isoformat() + " Plate:"+" No plate detected."
+                            with open(sys.argv[3], 'a') as f:
+                                f.write(text+"\n")
+                        else:
+                            text = now.isoformat() + " Plate: "+i
+                            controlList.append(i)
+                            with open(sys.argv[3], 'a') as f:
+                                f.write(text+"\n")
+
     counter += 1
     # when the counter hits 1200, it means two minutes passed. So for saving the memory program will reset the control lists
     if(counter == 1200):
